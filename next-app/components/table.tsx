@@ -36,8 +36,7 @@
 import { useRouter } from "next/navigation";
 // Buttonコンポーネントをインポート
 import { Button } from "@/components/taskButton";
-import { Task } from "@/.next/types/task";
-import { table } from "console";
+import { Task } from "@/types/task";
 
 type Props = {
     tasks: Task[];
