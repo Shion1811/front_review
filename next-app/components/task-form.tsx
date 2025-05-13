@@ -1,11 +1,13 @@
 import { useState, KeyboardEvent } from "react";
 import { Task } from "@/types/task";
+import { Button } from "@/components/taskButton";
 
 type Props = {
   onAddTask: (task: Task) => void;
+  onClose?: () => void;
 };
 
-export function TaskForm({ onAddTask }: Props) {
+export function TaskForm({ onAddTask, onClose }: Props) {
   const [newTask, setNewTask] = useState<Task>({ title: "", content: "" });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -18,6 +20,7 @@ export function TaskForm({ onAddTask }: Props) {
     });
     
     setNewTask({ title: "", content: "" });
+    onClose?.();
   };
 
   return (
@@ -35,11 +38,16 @@ export function TaskForm({ onAddTask }: Props) {
       <div className="flex flex-col gap-2">
         <label className="font-bold">内容</label>
         <textarea
-          className="border p-2 rounded-xl"
+          className="border p-2 rounded-xl w-full min-h-[100px] resize-none block"
           value={newTask.content}
           onChange={(e) => setNewTask({ ...newTask, content: e.target.value })}
           placeholder="タスクの内容を入力"
+          rows={4}
         />
+      </div>
+      <div className="flex justify-end gap-4">
+        <Button onClick={() => onClose?.()}>キャンセル</Button>
+        <Button onClick={() => handleSubmit(new Event('submit') as any)}>タスクを追加</Button>
       </div>
     </form>
   );

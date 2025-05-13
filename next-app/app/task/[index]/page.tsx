@@ -165,17 +165,23 @@ function Page({ params }: Props) {
                             className="border p-2 rounded-xl"
                             value={task.title}
                             onChange={(e) => setTask({...task, title: e.target.value})}
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter') {
+                                    e.preventDefault();
+                                    setIsOpen(false);
+                                }
+                            }}
                              />
                         </div>
 
                         {/* タスク内容入力欄 */}
                         <div className="flex flex-col gap-2">
                             <label>内容</label>
-                            <textarea
+                            <input
                             className="border p-2 rounded-xl"
                             value={task.content}
                             onChange={(e) => setTask({...task, content: e.target.value})}
-                            ></textarea>
+                            />
                         </div>
 
                         {/* キャンセルボタンと更新ボタン */}
@@ -194,8 +200,15 @@ function Page({ params }: Props) {
                             // タスク一覧ページに遷移
                             router.push("/task");
                             }}
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter') {
+                                    e.preventDefault();
+                                    setIsOpen(false);
+                                }
+                            }}
                         >
                             更新
+
                         </Button>
                         </div>
                     </form>
