@@ -6,6 +6,8 @@ import { Modal } from "@/components/modal";
 import { Table } from "@/components/table";
 import { Task } from "@/types/task";
 import { TaskForm } from "@/components/task-form";
+import { title } from "process";
+import { link } from "fs";
 
 function Page() {
     const [tasks, setTasks] = useState<Task[]>([]);
@@ -31,21 +33,28 @@ function Page() {
     };
 
     return (
-        <div className="flex flex-col gap-8 items-center p-16">
-            <h1 className="text-4xl font-bold">タスク一覧</h1>
+        <>
+            <head>
+                <title>TODOアプリ</title>
+                <link rel="icon" href="/list_tasks_22372.ico" />
+            </head>
 
-            <div className="w-full flex justify-end">
-                <Button onClick={() => setIsOpen(true)}>タスクを追加</Button>
+            <div className="flex flex-col gap-8 items-center p-16">
+                <h1 className="text-4xl font-bold">タスク一覧</h1>
+
+                <div className="w-full flex justify-end">
+                    <Button onClick={() => setIsOpen(true)}>タスクを追加</Button>
+                </div>
+
+                <Table tasks={tasks} />
+
+                {isOpen && (
+                    <Modal onClose={() => setIsOpen(false)}>
+                        <TaskForm onAddTask={handleAddTask} onClose={() => setIsOpen(false)} />
+                    </Modal>
+                )}
             </div>
-
-            <Table tasks={tasks} />
-
-            {isOpen && (
-                <Modal onClose={() => setIsOpen(false)}>
-                    <TaskForm onAddTask={handleAddTask} onClose={() => setIsOpen(false)} />
-                </Modal>
-            )}
-        </div>
+        </>
     );
 }
 

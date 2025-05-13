@@ -14,13 +14,18 @@ export function TaskForm({ onAddTask, onClose }: Props) {
     e.preventDefault();
     if (newTask.title.trim() === "") return;
     
-    onAddTask({
+    const taskToAdd = {
       title: newTask.title.trim(),
       content: newTask.content.trim(),
-    });
+    };
     
+    onAddTask(taskToAdd);
     setNewTask({ title: "", content: "" });
-    onClose?.();
+    
+    // 状態の更新を待ってからモーダルを閉じる
+    setTimeout(() => {
+      onClose?.();
+    }, 0);
   };
 
   return (
